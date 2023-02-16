@@ -1,10 +1,7 @@
 package com.dyrmig.banking.service.impl;
 
 import com.dyrmig.banking.classes.MyCustomException;
-import com.dyrmig.banking.model.Account;
-import com.dyrmig.banking.model.AccountHolder;
-import com.dyrmig.banking.model.Admin;
-import com.dyrmig.banking.model.User;
+import com.dyrmig.banking.model.*;
 import com.dyrmig.banking.repository.AccountHolderRepository;
 import com.dyrmig.banking.repository.AdminRepository;
 import com.dyrmig.banking.repository.RoleRepository;
@@ -45,22 +42,44 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User saveAdmin(Admin admin) {
+        if (admin.getName() == null || admin.getName().isEmpty() || admin.getName().isBlank()){
+            throw new MyCustomException("Name cannot be empty");
+        }
+        if (admin.getUsername() == null || admin.getUsername().isEmpty() || admin.getUsername().isBlank()){
+            throw new MyCustomException("Username cannot be empty");
+        }
+        if (admin.getPassword() == null || admin.getPassword().isEmpty() || admin.getPassword().isBlank()){
+            throw new MyCustomException("Password cannot be empty");
+        }
+
         Optional<User> userOptional = userRepository.findByUsername(admin.getUsername());
         if(userOptional.isPresent()){
             throw new MyCustomException("Username already exists");
         }
         // Encode the user's password for security before saving
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        admin.setRoles(List.of(new Role("ADMIN")));
         return adminRepository.save(admin);
     }
     @Override
     public AccountHolder saveAccountHolder(AccountHolder accountHolder) {
+        if (accountHolder.getName() == null || accountHolder.getName().isEmpty() || accountHolder.getName().isBlank()){
+            throw new MyCustomException("Name cannot be empty");
+        }
+        if (accountHolder.getUsername() == null || accountHolder.getUsername().isEmpty() || accountHolder.getUsername().isBlank()){
+            throw new MyCustomException("Username cannot be empty");
+        }
+        if (accountHolder.getPassword() == null || accountHolder.getPassword().isEmpty() || accountHolder.getPassword().isBlank()){
+            throw new MyCustomException("Password cannot be empty");
+        }
+
         Optional<User> userOptional = userRepository.findByUsername(accountHolder.getUsername());
         if(userOptional.isPresent()){
             throw new MyCustomException("Username already exists");
         }
         // Encode the user's password for security before saving
         accountHolder.setPassword(passwordEncoder.encode(accountHolder.getPassword()));
+        accountHolder.setRoles(List.of(new Role("USER")));
         return accountHolderRepository.save(accountHolder);
     }
     @Override

@@ -121,8 +121,9 @@ public class AccountServiceImpl implements AccountService {
             throw new MyCustomException("Sender account don't have enough balance");
         }
 
-        fromAccountOptional.get().setBalance(new Money(fromAccountOptional.get().getBalance().getAmount().subtract(    transferForm.getAmount().getAmount()    )) );
-        toAccountOptional.get().setBalance(new Money( toAccountOptional.get().getBalance().getAmount().add(   transferForm.getAmount().getAmount()    ) ));
+
+        fromAccountOptional.get().getBalance().decreaseAmount(transferForm.getAmount().getAmount());
+        toAccountOptional.get().getBalance().increaseAmount(transferForm.getAmount().getAmount());
 
         accountRepository.save(fromAccountOptional.get());
         accountRepository.save(toAccountOptional.get());
@@ -148,7 +149,8 @@ public class AccountServiceImpl implements AccountService {
         if(accountOptional.get().getBalance().getAmount().compareTo(amountOfOperationDTO.amountOfOperation) < 0){
             throw new MyCustomException("Account don't have enough funds for this operation");
         }
-        accountOptional.get().setBalance(new Money(accountOptional.get().getBalance().getAmount().subtract(amountOfOperationDTO.amountOfOperation), accountOptional.get().getBalance().getCurrency()));
+
+        accountOptional.get().getBalance().decreaseAmount(amountOfOperationDTO.amountOfOperation);
         accountRepository.save(accountOptional.get());
 
         //checking if the account is subjected to a minimum balance penalty
@@ -169,7 +171,8 @@ public class AccountServiceImpl implements AccountService {
         if(!accountOptional.isPresent()){
             throw new MyCustomException("Account not found");
         }
-        accountOptional.get().setBalance(new Money(accountOptional.get().getBalance().getAmount().add(amountOfOperationDTO.amountOfOperation), accountOptional.get().getBalance().getCurrency()));
+
+        accountOptional.get().getBalance().increaseAmount(amountOfOperationDTO.amountOfOperation);
         accountRepository.save(accountOptional.get());
     }
     @Override

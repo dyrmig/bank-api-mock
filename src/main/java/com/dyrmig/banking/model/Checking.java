@@ -8,8 +8,6 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-//@JsonIgnoreProperties({ "minimumBalance", "monthlyMaintenanceFee" })
-//@JsonIgnoreProperties(value="minimumBalance", allowSetters = true, allowGetters = true)
 public class Checking extends Account {
     @Embedded
     @AttributeOverrides({

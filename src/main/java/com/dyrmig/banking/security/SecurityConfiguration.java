@@ -56,6 +56,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST, "/admins").hasRole("ADMIN") //change to .permitAll() be able to create the admin if there are no admins
                 .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN") //get all users (admins and accountHolders)
                 .requestMatchers(HttpMethod.POST, "/accountholders").hasRole("ADMIN") //create accountHolders
+                .requestMatchers(HttpMethod.POST, "/thirdparty").hasRole("ADMIN") //create ThirdParty
                 .requestMatchers(HttpMethod.POST, "/accountholders/*/checking").hasRole("ADMIN") //create checking account
                 .requestMatchers(HttpMethod.POST, "/accountholders/*/savings").hasRole("ADMIN") //create savings account
                 .requestMatchers(HttpMethod.POST, "/accountholders/*/creditcard").hasRole("ADMIN") //create creditcard account
@@ -65,7 +66,8 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/accountholders/*/accounts").hasAnyRole("USER", "ADMIN") //all accounts of an AccountHolder
                 .requestMatchers(HttpMethod.GET, "/accounts/*").hasAnyRole("USER", "ADMIN") //get one account
                 .requestMatchers(HttpMethod.GET, "/accountholders/*").hasAnyRole("USER", "ADMIN") //get one accountholder
-
+                .requestMatchers(HttpMethod.POST, "/thirdparty/*/charge").permitAll()
+                .requestMatchers(HttpMethod.POST, "/thirdparty/*/refund").permitAll()
 
                 .requestMatchers(HttpMethod.GET, "/test2").hasAnyRole("USER", "ADMIN")
 

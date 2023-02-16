@@ -13,7 +13,7 @@ public abstract class User {
     private Long id;
     private String name;
     private String username;
-    @JsonIgnore
+    //@JsonIgnore
     private String password;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
