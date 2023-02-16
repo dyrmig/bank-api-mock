@@ -14,4 +14,5 @@ public interface AccountHolderRepository extends JpaRepository<AccountHolder, Lo
     Optional<AccountHolder> accountHolderWithAccounts(@Param("id") Long id);
     @Query("SELECT a FROM AccountHolder a JOIN FETCH secondaryOwnedAccountList WHERE a.id = :id")
     Optional<AccountHolder> accountHolderWithSecondaryAccounts(@Param("id") Long id);
+    Optional<AccountHolder> findByUsername(String username);
 }

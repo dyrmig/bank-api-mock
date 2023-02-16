@@ -23,32 +23,34 @@ public class Savings extends Account{
     public Savings() {
     }
 
-    public Savings(Money balance, String secretKey, AccountHolder primaryOwner) {
+/*    public Savings(Money balance, String secretKey, AccountHolder primaryOwner) {
         super(balance, secretKey, primaryOwner);
         this.interestRate = new BigDecimal("0.0025");
         this.minimumBalance = new Money(new BigDecimal("1000.00"), balance.getCurrency());
-    }
+    }*/
 
     public Savings(Money balance, String secretKey, AccountHolder primaryOwner, BigDecimal interestRate, Money minimumBalance) {
         super(balance, secretKey, primaryOwner);
-        setInterestRate(interestRate);
-        setMinimumBalance(minimumBalance);
+        if(interestRate == null){
+            this.interestRate = new BigDecimal("0.0025");
+        } else {setInterestRate(interestRate);}
+        if(minimumBalance == null){
+            this.minimumBalance = new Money(new BigDecimal("1000.00"), balance.getCurrency());
+        } else {setMinimumBalance(minimumBalance);}
     }
-    public Savings(Money balance, String secretKey, AccountHolder primaryOwner, BigDecimal interestRate) {
+/*    public Savings(Money balance, String secretKey, AccountHolder primaryOwner, BigDecimal interestRate) {
         super(balance, secretKey, primaryOwner);
         setInterestRate(interestRate);
         this.minimumBalance = new Money(new BigDecimal("1000.00"), balance.getCurrency());
-    }
-    public Savings(Money balance, String secretKey, AccountHolder primaryOwner, Money minimumBalance) {
+    }*/
+/*    public Savings(Money balance, String secretKey, AccountHolder primaryOwner, Money minimumBalance) {
         super(balance, secretKey, primaryOwner);
         this.interestRate = new BigDecimal("0.0025");
         setMinimumBalance(minimumBalance);
-    }
-    public void setBalance(Money balance) {
-        if(balance.getAmount().compareTo(minimumBalance.getAmount()) < 0){
-            super.setBalance(new Money(balance.getAmount().subtract(super.getPenaltyFee().getAmount()), super.getBalance().getCurrency()));
-        } else {
-            super.setBalance(new Money(balance.getAmount(), super.getBalance().getCurrency()));
+    }*/
+    public void checkBalanceReachedMinimum() {
+        if(super.getBalance().getAmount().compareTo(minimumBalance.getAmount()) < 0){
+            super.setBalance(new Money(super.getBalance().getAmount().subtract(super.getPenaltyFee().getAmount()), super.getBalance().getCurrency()));
         }
     }
     public Money getBalance(){

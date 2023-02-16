@@ -2,8 +2,6 @@ package com.dyrmig.banking.repository;
 
 import com.dyrmig.banking.classes.Address;
 import com.dyrmig.banking.classes.Money;
-import com.dyrmig.banking.enums.Role;
-import com.dyrmig.banking.enums.Status;
 import com.dyrmig.banking.model.AccountHolder;
 import com.dyrmig.banking.model.Savings;
 import org.junit.jupiter.api.AfterEach;
@@ -28,7 +26,7 @@ class SavingsRepositoryTest {
     @BeforeEach
     void setUp() {
         Address address1 = new Address("Calle 13", "13","Barcelona", "Barcelona", "91234", "Spain");
-        accountHolder1 = new AccountHolder("Dmitri", LocalDate.of(1986, 10, 26),address1);
+        accountHolder1 = new AccountHolder("Dmitri", "dmitri123", "pasword123", LocalDate.of(1986, 10, 26),address1);
         accountHolderRepository.save(accountHolder1);
 
         //savingsAccount1 = new Savings(new Money(new BigDecimal("60000")), "uasd82h8e", accountHolder1, new Money(new BigDecimal("60")));

@@ -2,11 +2,14 @@ package com.dyrmig.banking.model;
 
 import com.dyrmig.banking.classes.Money;
 import com.dyrmig.banking.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
+//@JsonIgnoreProperties({ "minimumBalance", "monthlyMaintenanceFee" })
+//@JsonIgnoreProperties(value="minimumBalance", allowSetters = true, allowGetters = true)
 public class Checking extends Account {
     @Embedded
     @AttributeOverrides({
@@ -29,11 +32,9 @@ public class Checking extends Account {
         this.minimumBalance = new Money(new BigDecimal("250"), balance.getCurrency());
         this.monthlyMaintenanceFee = new Money(new BigDecimal("12"), balance.getCurrency());
     }
-    public void setBalance(Money balance) {
-        if(balance.getAmount().compareTo(minimumBalance.getAmount()) < 0){
-            super.setBalance(new Money(balance.getAmount().subtract(super.getPenaltyFee().getAmount()), super.getBalance().getCurrency()));
-        } else {
-            super.setBalance(new Money(balance.getAmount(), super.getBalance().getCurrency()));
+    public void checkBalanceReachedMinimum() {
+        if(super.getBalance().getAmount().compareTo(minimumBalance.getAmount()) < 0){
+            super.setBalance(new Money(super.getBalance().getAmount().subtract(super.getPenaltyFee().getAmount()), super.getBalance().getCurrency()));
         }
     }
     public Money getMinimumBalance() {

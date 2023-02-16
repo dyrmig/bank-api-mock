@@ -2,6 +2,7 @@ package com.dyrmig.banking.model;
 
 import com.dyrmig.banking.classes.Money;
 import com.dyrmig.banking.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -23,9 +24,11 @@ public abstract class Account {
     private String secretKey;
     @ManyToOne
     @JoinColumn(name = "primary_owner_id")
+    @JsonIgnore
     private AccountHolder primaryOwner;
     @ManyToOne
     @JoinColumn(name = "secondary_owner_id")
+    @JsonIgnore
     private AccountHolder secondaryOwner;
     @Embedded
     @AttributeOverrides({

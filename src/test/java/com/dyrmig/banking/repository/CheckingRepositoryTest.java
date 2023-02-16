@@ -27,7 +27,7 @@ class CheckingRepositoryTest {
     @BeforeEach
     void setUp() {
         Address address1 = new Address("Calle 13", "13","Barcelona", "Barcelona", "91234", "Spain");
-        accountHolder1 = new AccountHolder("Dmitri", LocalDate.of(1986, 10, 26),address1);
+        accountHolder1 = new AccountHolder("Dmitri", "dmitri123", "pasword123", LocalDate.of(1986, 10, 26),address1);
         accountHolderRepository.save(accountHolder1);
 
         checking1 = new Checking(new Money(new BigDecimal("60000")), "chcktsd82h8e", accountHolder1);

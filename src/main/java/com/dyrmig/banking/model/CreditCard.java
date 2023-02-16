@@ -22,17 +22,21 @@ public class CreditCard extends Account{
 
     public CreditCard() {
     }
-    public CreditCard(Money balance, String secretKey, AccountHolder primaryOwner) {
+/*    public CreditCard(Money balance, String secretKey, AccountHolder primaryOwner) {
         super(balance, secretKey, primaryOwner);
         this.creditLimit = new Money(new BigDecimal("100"), balance.getCurrency());
         this.interestRate = new BigDecimal("0.2");
-    }
+    }*/
     public CreditCard(Money balance, String secretKey, AccountHolder primaryOwner, Money creditLimit, BigDecimal interestRate) {
         super(balance, secretKey, primaryOwner);
-        setCreditLimit(creditLimit);
-        setInterestRate(interestRate);
+        if(creditLimit == null){
+            this.creditLimit = new Money(new BigDecimal("100"), balance.getCurrency());
+        } else {setCreditLimit(creditLimit);}
+        if(interestRate == null){
+            this.interestRate = new BigDecimal("0.2");
+        } else {setInterestRate(interestRate);}
     }
-    public CreditCard(Money balance, String secretKey, AccountHolder primaryOwner, Money creditLimit) {
+/*    public CreditCard(Money balance, String secretKey, AccountHolder primaryOwner, Money creditLimit) {
         super(balance, secretKey, primaryOwner);
         setCreditLimit(creditLimit);
         this.interestRate = new BigDecimal("0.2");
@@ -41,7 +45,7 @@ public class CreditCard extends Account{
         super(balance, secretKey, primaryOwner);
         this.creditLimit = new Money(new BigDecimal("100"), balance.getCurrency());
         setInterestRate(interestRate);
-    }
+    }*/
     public Money getBalance(){
         long months = ChronoUnit.MONTHS.between(getLastInterestAdded(), LocalDate.now());
         if (months >= 1) {

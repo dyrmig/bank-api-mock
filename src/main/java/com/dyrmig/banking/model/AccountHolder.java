@@ -1,7 +1,7 @@
 package com.dyrmig.banking.model;
 
 import com.dyrmig.banking.classes.Address;
-import com.dyrmig.banking.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -31,15 +31,17 @@ public class AccountHolder extends User{
     })
     private Address mailingAddress;
     @OneToMany(mappedBy = "primaryOwner")
+    @JsonIgnore
     private List<Account> ownedAccountList;
     @OneToMany(mappedBy = "secondaryOwner")
+    @JsonIgnore
     private List<Account> secondaryOwnedAccountList;
 
     public AccountHolder() {
     }
 
-    public AccountHolder(String name, LocalDate dateOfBirth, Address primaryAddress) {
-        super(name, Role.USER);
+    public AccountHolder(String name, String username, String password, LocalDate dateOfBirth, Address primaryAddress) {
+        super(name, username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
     }
