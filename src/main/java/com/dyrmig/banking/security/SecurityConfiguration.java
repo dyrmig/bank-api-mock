@@ -53,7 +53,7 @@ public class SecurityConfiguration {
 
         // set up authorization for different request matchers and user roles
         http.authorizeHttpRequests() // GET /hello/user
-                .requestMatchers(HttpMethod.POST, "/admins").hasRole("ADMIN") //change to .permitAll() be able to create the admin if there are no admins
+                .requestMatchers(HttpMethod.POST, "/admins").permitAll() //change to .permitAll() be able to create the admin if there are no admins
                 .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN") //get all users (admins and accountHolders)
                 .requestMatchers(HttpMethod.POST, "/accountholders").hasRole("ADMIN") //create accountHolders
                 .requestMatchers(HttpMethod.POST, "/thirdparty").hasRole("ADMIN") //create ThirdParty

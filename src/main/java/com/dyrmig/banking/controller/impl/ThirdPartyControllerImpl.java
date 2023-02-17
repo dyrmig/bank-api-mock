@@ -26,18 +26,22 @@ public class ThirdPartyControllerImpl implements ThirdPartyController {
         return thirdPartyService.saveThirdParty(thirdParty);
     }
     @PostMapping("/thirdparty/{accountId}/charge")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void charge(@PathVariable(name = "accountId") Long accountId, @RequestBody ThirdPartyOperationDTO thirdPartyOperationDTO, @RequestHeader("hashed-key") String hashedKey){
         thirdPartyService.charge(accountId, thirdPartyOperationDTO, hashedKey);
     }
     @PostMapping("/thirdparty/{accountId}/refund")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void refund(@PathVariable(name = "accountId") Long accountId, @RequestBody ThirdPartyOperationDTO thirdPartyOperationDTO, @RequestHeader("hashed-key") String hashedKey){
         thirdPartyService.refund(accountId, thirdPartyOperationDTO, hashedKey);
     }
     @DeleteMapping("/thirdparty/{thirdPartyId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteThirdParty(@PathVariable(name = "thirdPartyId") Long thirdPartyId){
         thirdPartyService.deleteThirdParty(thirdPartyId);
     }
     @GetMapping("/thirdparty")
+    @ResponseStatus(HttpStatus.OK)
     public List<ThirdParty> findAll(){
         return thirdPartyRepository.findAll();
     }

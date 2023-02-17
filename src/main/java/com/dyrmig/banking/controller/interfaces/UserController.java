@@ -11,10 +11,9 @@ import java.util.Optional;
 
 public interface UserController {
     List<User> getUsers();
-    String test();
     AccountHolder getAccountHolder(Long accountHolderId, Authentication authentication);
     List<Account> getAccountHolderWithAccounts(Long accountHolderId, Authentication authentication);
     void saveUser(User user);
-    void saveAdmin(Admin admin);
-    void saveAccountHolder(AccountHolder accountHolder);
+    Admin saveAdmin(Admin admin);
+    AccountHolder saveAccountHolder(AccountHolder accountHolder);
 }

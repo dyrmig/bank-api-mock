@@ -110,6 +110,9 @@ public class AccountServiceImpl implements AccountService {
             throw new MyCustomException("User don't have rights to the source account");
         }
 
+        if(!transferForm.getRecipientName().equals(toAccountOptional.get().getPrimaryOwner().getName())){
+            throw new MyCustomException("Recipient name don't match");
+        }
 
         if(!fromAccountOptional.isPresent()){
             throw new MyCustomException("Sender account not found");

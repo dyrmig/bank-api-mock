@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.math.BigDecimal;
 
 public interface AccountController {
-    void saveChecking(Checking checking, Long accountHolderId);
-    void saveSavings(Savings savings, Long accountHolderId);
-    void saveCreditCard(CreditCard creditCard, Long accountHolderId);
+    Account saveChecking(Checking checking, Long accountHolderId);
+    Account saveSavings(Savings savings, Long accountHolderId);
+    Account saveCreditCard(CreditCard creditCard, Long accountHolderId);
     void transfer(Long accountHolderId, Long accountId, TransferForm transferForm, Authentication authentication);
     void subtractBalance(Long accountId, AmountOfOperationDTO amountOfOperationDTO);
     void addBalance(Long accountId, AmountOfOperationDTO amountOfOperationDTO);

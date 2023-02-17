@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserService {
 
     User saveUser(User user);
-    User saveAdmin(Admin admin);
+    Admin saveAdmin(Admin admin);
     AccountHolder saveAccountHolder(AccountHolder accountHolder);
     AccountHolder getAccountHolder(Long accountHolderId, Authentication authentication);
     List<Account> getAccountHolderAccounts(Long accountHolderId, Authentication authentication);

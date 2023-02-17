@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
     @Override
-    public User saveAdmin(Admin admin) {
+    public Admin saveAdmin(Admin admin) {
         if (admin.getName() == null || admin.getName().isEmpty() || admin.getName().isBlank()){
             throw new MyCustomException("Name cannot be empty");
         }
@@ -57,9 +57,9 @@ public class UserServiceImpl implements UserService {
             throw new MyCustomException("Username already exists");
         }
         // Encode the user's password for security before saving
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRoles(List.of(new Role("ADMIN")));
-        return adminRepository.save(admin);
+        Admin newAdmin = new Admin(admin.getName(), admin.getUsername(), passwordEncoder.encode(admin.getPassword()));
+        //admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        return adminRepository.save(newAdmin);
     }
     @Override
     public AccountHolder saveAccountHolder(AccountHolder accountHolder) {
@@ -78,9 +78,11 @@ public class UserServiceImpl implements UserService {
             throw new MyCustomException("Username already exists");
         }
         // Encode the user's password for security before saving
-        accountHolder.setPassword(passwordEncoder.encode(accountHolder.getPassword()));
-        accountHolder.setRoles(List.of(new Role("USER")));
-        return accountHolderRepository.save(accountHolder);
+        AccountHolder newAccountHolder = new AccountHolder(accountHolder.getName(),
+                accountHolder.getUsername(), passwordEncoder.encode(accountHolder.getPassword()),
+                accountHolder.getDateOfBirth(), accountHolder.getPrimaryAddress());
+        //accountHolder.setPassword(passwordEncoder.encode(accountHolder.getPassword()));
+        return accountHolderRepository.save(newAccountHolder);
     }
     @Override
     public AccountHolder getAccountHolder(Long accountHolderId, Authentication authentication){

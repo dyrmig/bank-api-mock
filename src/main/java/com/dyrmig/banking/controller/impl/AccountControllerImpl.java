@@ -23,36 +23,40 @@ public class AccountControllerImpl implements AccountController {
 
     @PostMapping("/accountholders/{accountHolderId}/checking")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveChecking(@RequestBody Checking checking, @PathVariable(name = "accountHolderId") Long accountHolderId) {
-        accountService.saveChecking(checking, accountHolderId);
+    public Account saveChecking(@RequestBody Checking checking, @PathVariable(name = "accountHolderId") Long accountHolderId) {
+        return accountService.saveChecking(checking, accountHolderId);
     }
 
     @PostMapping("/accountholders/{accountHolderId}/savings")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveSavings(@RequestBody Savings savings, @PathVariable(name = "accountHolderId") Long accountHolderId) {
-        accountService.saveSavings(savings, accountHolderId);
+    public Account saveSavings(@RequestBody Savings savings, @PathVariable(name = "accountHolderId") Long accountHolderId) {
+        return accountService.saveSavings(savings, accountHolderId);
     }
 
     @PostMapping("/accountholders/{accountHolderId}/creditcard")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveCreditCard(@RequestBody CreditCard creditCard, @PathVariable(name = "accountHolderId") Long accountHolderId) {
-        accountService.saveCreditCard(creditCard, accountHolderId);
+    public Account saveCreditCard(@RequestBody CreditCard creditCard, @PathVariable(name = "accountHolderId") Long accountHolderId) {
+        return accountService.saveCreditCard(creditCard, accountHolderId);
     }
 
     @PostMapping("/accountholders/{accountHolderId}/accounts/{accountId}/transfer")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void transfer(@PathVariable(name = "accountHolderId") Long accountHolderId, @PathVariable(name = "accountId") Long accountId, @RequestBody TransferForm transferForm, Authentication authentication) {
         accountService.transfer(accountHolderId, accountId, transferForm, authentication);
     }
 
     @PatchMapping("/accounts/{accountId}/subtract")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void subtractBalance(@PathVariable(name = "accountId") Long accountId, @RequestBody AmountOfOperationDTO amountOfOperationDTO){
         accountService.subtractBalance(accountId, amountOfOperationDTO);
     }
     @PatchMapping("/accounts/{accountId}/add")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addBalance(@PathVariable(name = "accountId") Long accountId, @RequestBody AmountOfOperationDTO amountOfOperationDTO){
         accountService.addBalance(accountId, amountOfOperationDTO);
     }
     @GetMapping("/accounts/{accountId}")
+    @ResponseStatus(HttpStatus.OK)
     public Account getAccount(@PathVariable(name = "accountId") Long accountId, Authentication authentication){
         return accountService.getAccount(accountId, authentication);
     }

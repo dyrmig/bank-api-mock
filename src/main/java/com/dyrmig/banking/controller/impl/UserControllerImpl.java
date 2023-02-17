@@ -28,26 +28,17 @@ public class UserControllerImpl implements UserController {
     private AccountHolderRepository accountHolderRepository;
 
     @GetMapping("/users")
+    @ResponseStatus(HttpStatus.OK)
     public List<User> getUsers() {
         return userService.getUsers();
     }
-    @GetMapping("/test")
-    public String test() {
-        return "hello this is a test";
-    }
-
-    @GetMapping("/test2")
-    public String test2(Authentication authentication) {
-
-        return "Hello, " + authentication.getName() + " " + authentication.getAuthorities();
-        //return "hello this is a test 2";
-    }
-
     @GetMapping("/accountholders/{accountHolderId}/accounts") //get all accounts of one accountHolder
+    @ResponseStatus(HttpStatus.OK)
     public List<Account> getAccountHolderWithAccounts(@PathVariable(name = "accountHolderId") Long accountHolderId, Authentication authentication){
         return userService.getAccountHolderAccounts(accountHolderId, authentication);
     }
     @GetMapping("/accountholders/{accountHolderId}")
+    @ResponseStatus(HttpStatus.OK)
     public AccountHolder getAccountHolder(@PathVariable(name = "accountHolderId") Long accountHolderId, Authentication authentication){
         return userService.getAccountHolder(accountHolderId, authentication);
     }
@@ -58,12 +49,12 @@ public class UserControllerImpl implements UserController {
     }
     @PostMapping("/admins")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveAdmin(@RequestBody Admin admin) {
-        userService.saveAdmin(admin);
+    public Admin saveAdmin(@RequestBody Admin admin) {
+        return userService.saveAdmin(admin);
     }
     @PostMapping("/accountholders")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveAccountHolder(@RequestBody AccountHolder accountHolder) {
-        userService.saveAccountHolder(accountHolder);
+    public AccountHolder saveAccountHolder(@RequestBody AccountHolder accountHolder) {
+        return userService.saveAccountHolder(accountHolder);
     }
 }

@@ -44,6 +44,7 @@ public class AccountHolder extends User{
         super(name, username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
+        super.setRoles(List.of(new Role("USER")));
     }
 
     public LocalDate getDateOfBirth() {
