@@ -2,27 +2,43 @@ package com.dyrmig.banking.controller.impl;
 
 import com.dyrmig.banking.classes.AmountOfOperationDTO;
 import com.dyrmig.banking.classes.MyCustomException;
+import com.dyrmig.banking.classes.ThirdPartyOperationDTO;
 import com.dyrmig.banking.controller.interfaces.ThirdPartyController;
 import com.dyrmig.banking.model.ThirdParty;
 import com.dyrmig.banking.repository.ThirdPartyRepository;
 import com.dyrmig.banking.service.interfaces.ThirdPartyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ThirdPartyControllerImpl implements ThirdPartyController {
     @Autowired
     private ThirdPartyService thirdPartyService;
+    @Autowired
+    private ThirdPartyRepository thirdPartyRepository;
+
     @PostMapping("/thirdparty")
-    public void saveThirdParty(@RequestBody ThirdParty thirdParty) {
-        thirdPartyService.saveThirdParty(thirdParty);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ThirdParty saveThirdParty(@RequestBody ThirdParty thirdParty) {
+        return thirdPartyService.saveThirdParty(thirdParty);
     }
     @PostMapping("/thirdparty/{accountId}/charge")
-    public void charge(@PathVariable(name = "accountId") Long accountId, @RequestBody AmountOfOperationDTO amountOfOperationDTO, @RequestHeader("hashed-key") String hashedKey){
-        thirdPartyService.charge(accountId, amountOfOperationDTO, hashedKey);
+    public void charge(@PathVariable(name = "accountId") Long accountId, @RequestBody ThirdPartyOperationDTO thirdPartyOperationDTO, @RequestHeader("hashed-key") String hashedKey){
+        thirdPartyService.charge(accountId, thirdPartyOperationDTO, hashedKey);
     }
     @PostMapping("/thirdparty/{accountId}/refund")
-    public void refund(@PathVariable(name = "accountId") Long accountId, @RequestBody AmountOfOperationDTO amountOfOperationDTO, @RequestHeader("hashed-key") String hashedKey){
-        thirdPartyService.refund(accountId, amountOfOperationDTO, hashedKey);
+    public void refund(@PathVariable(name = "accountId") Long accountId, @RequestBody ThirdPartyOperationDTO thirdPartyOperationDTO, @RequestHeader("hashed-key") String hashedKey){
+        thirdPartyService.refund(accountId, thirdPartyOperationDTO, hashedKey);
+    }
+    @DeleteMapping("/thirdparty/{thirdPartyId}")
+    public void deleteThirdParty(@PathVariable(name = "thirdPartyId") Long thirdPartyId){
+        thirdPartyService.deleteThirdParty(thirdPartyId);
+    }
+    @GetMapping("/thirdparty")
+    public List<ThirdParty> findAll(){
+        return thirdPartyRepository.findAll();
     }
 }

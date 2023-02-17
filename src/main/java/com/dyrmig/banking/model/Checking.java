@@ -32,7 +32,7 @@ public class Checking extends Account {
     }
     public void checkBalanceReachedMinimum() {
         if(super.getBalance().getAmount().compareTo(minimumBalance.getAmount()) < 0){
-            super.setBalance(new Money(super.getBalance().getAmount().subtract(super.getPenaltyFee().getAmount()), super.getBalance().getCurrency()));
+            super.getBalance().decreaseAmount(super.getPenaltyFee().getAmount());
         }
     }
     public Money getMinimumBalance() {

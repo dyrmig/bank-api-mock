@@ -39,7 +39,7 @@ public class CreditCard extends Account{
             // More than a month has passed
             //update the balance with the added interest
             BigDecimal monthlyInterest = interestRate.divide(new BigDecimal("12"));
-            super.setBalance(new Money(super.getBalance().getAmount().multiply(monthlyInterest).add(super.getBalance().getAmount())));
+            super.getBalance().increaseAmount(super.getBalance().getAmount().multiply(monthlyInterest));
             //update the date of the last added interest
             setLastInterestAdded(LocalDate.now());
             return super.getBalance();

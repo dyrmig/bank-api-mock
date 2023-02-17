@@ -146,11 +146,11 @@ public class AccountServiceImpl implements AccountService {
         if(!accountOptional.isPresent()){
             throw new MyCustomException("Account not found");
         }
-        if(accountOptional.get().getBalance().getAmount().compareTo(amountOfOperationDTO.amountOfOperation) < 0){
+        if(accountOptional.get().getBalance().getAmount().compareTo(amountOfOperationDTO.getAmountOfOperation()) < 0){
             throw new MyCustomException("Account don't have enough funds for this operation");
         }
 
-        accountOptional.get().getBalance().decreaseAmount(amountOfOperationDTO.amountOfOperation);
+        accountOptional.get().getBalance().decreaseAmount(amountOfOperationDTO.getAmountOfOperation());
         accountRepository.save(accountOptional.get());
 
         //checking if the account is subjected to a minimum balance penalty
@@ -172,7 +172,7 @@ public class AccountServiceImpl implements AccountService {
             throw new MyCustomException("Account not found");
         }
 
-        accountOptional.get().getBalance().increaseAmount(amountOfOperationDTO.amountOfOperation);
+        accountOptional.get().getBalance().increaseAmount(amountOfOperationDTO.getAmountOfOperation());
         accountRepository.save(accountOptional.get());
     }
     @Override

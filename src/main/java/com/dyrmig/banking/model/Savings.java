@@ -35,7 +35,7 @@ public class Savings extends Account{
 
     public void checkBalanceReachedMinimum() {
         if(super.getBalance().getAmount().compareTo(minimumBalance.getAmount()) < 0){
-            super.setBalance(new Money(super.getBalance().getAmount().subtract(super.getPenaltyFee().getAmount()), super.getBalance().getCurrency()));
+            super.getBalance().decreaseAmount(super.getPenaltyFee().getAmount());
         }
     }
     public Money getBalance(){
@@ -43,7 +43,7 @@ public class Savings extends Account{
         if (years >= 1) {
             // More than a year has passed
             //update the balance with the added interest
-            setBalance(new Money(super.getBalance().getAmount().multiply(getInterestRate()).add(super.getBalance().getAmount())));
+            super.getBalance().increaseAmount(super.getBalance().getAmount().multiply(getInterestRate()));
             //update the date of the last added interest
             setLastInterestAdded(LocalDate.now());
             return super.getBalance();

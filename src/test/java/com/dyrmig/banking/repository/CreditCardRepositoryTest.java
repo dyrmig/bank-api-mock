@@ -30,7 +30,7 @@ class CreditCardRepositoryTest {
         accountHolderRepository.save(accountHolder1);
 
         //creditCard1 = new CreditCard(new Money(new BigDecimal("60000")), "cdtsd82h8e", accountHolder1, new Money(new BigDecimal("60")));
-        creditCard1 = new CreditCard(new Money(new BigDecimal("60000")), "cdtsd82h8e", accountHolder1, new Money(new BigDecimal("99")));
+        creditCard1 = new CreditCard(new Money(new BigDecimal("60000")), "cdtsd82h8e", accountHolder1, new Money(new BigDecimal("99")), new BigDecimal("0.2"));
         creditCardRepository.save(creditCard1);
     }
 

@@ -57,6 +57,8 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN") //get all users (admins and accountHolders)
                 .requestMatchers(HttpMethod.POST, "/accountholders").hasRole("ADMIN") //create accountHolders
                 .requestMatchers(HttpMethod.POST, "/thirdparty").hasRole("ADMIN") //create ThirdParty
+                .requestMatchers(HttpMethod.GET, "/thirdparty").hasRole("ADMIN") //get all ThirdParty
+                .requestMatchers(HttpMethod.DELETE, "/thirdparty/*").hasRole("ADMIN") //delete ThirdParty
                 .requestMatchers(HttpMethod.POST, "/accountholders/*/checking").hasRole("ADMIN") //create checking account
                 .requestMatchers(HttpMethod.POST, "/accountholders/*/savings").hasRole("ADMIN") //create savings account
                 .requestMatchers(HttpMethod.POST, "/accountholders/*/creditcard").hasRole("ADMIN") //create creditcard account

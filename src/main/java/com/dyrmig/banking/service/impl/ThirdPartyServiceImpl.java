@@ -3,6 +3,7 @@ package com.dyrmig.banking.service.impl;
 import com.dyrmig.banking.classes.AmountOfOperationDTO;
 import com.dyrmig.banking.classes.Money;
 import com.dyrmig.banking.classes.MyCustomException;
+import com.dyrmig.banking.classes.ThirdPartyOperationDTO;
 import com.dyrmig.banking.model.Account;
 import com.dyrmig.banking.model.ThirdParty;
 import com.dyrmig.banking.repository.AccountRepository;
@@ -20,15 +21,15 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
     @Autowired
     AccountRepository accountRepository;
     @Override
-    public void saveThirdParty(ThirdParty thirdParty) {
+    public ThirdParty saveThirdParty(ThirdParty thirdParty) {
         if (thirdParty.getName() == null || thirdParty.getName().isEmpty() || thirdParty.getName().isBlank()){
             throw new MyCustomException("Name cannot be empty");
         }
         ThirdParty newThirdParty = new ThirdParty(thirdParty.getName());
-        thirdPartyRepository.save(newThirdParty);
+        return thirdPartyRepository.save(newThirdParty);
     }
     @Override
-    public void charge(Long accountId, AmountOfOperationDTO amountOfOperationDTO, String hashedKey){
+    public void charge(Long accountId, ThirdPartyOperationDTO thirdPartyOperationDTO, String hashedKey){
         Optional<ThirdParty> thirdPartyOptional = thirdPartyRepository.findByHashedKey(hashedKey);
         if(!thirdPartyOptional.isPresent()){
             throw new MyCustomException("ThirdParty not found");
@@ -37,15 +38,18 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
         if(!accountOptional.isPresent()){
             throw new MyCustomException("Target account not found");
         }
-        if(accountOptional.get().getBalance().getAmount().compareTo(amountOfOperationDTO.amountOfOperation) < 0){
+        if(!thirdPartyOperationDTO.getTargetAccountSecretKey().equals(accountOptional.get().getSecretKey())){
+            throw new MyCustomException("Target account SecretKey is not valid");
+        }
+        if(accountOptional.get().getBalance().getAmount().compareTo(thirdPartyOperationDTO.getAmountOfOperation()) < 0){
             throw new MyCustomException("Account don't have enough funds for this operation");
         }
 
-        accountOptional.get().getBalance().decreaseAmount(amountOfOperationDTO.amountOfOperation);
+        accountOptional.get().getBalance().decreaseAmount(thirdPartyOperationDTO.getAmountOfOperation());
         accountRepository.save(accountOptional.get());
     }
     @Override
-    public void refund(Long accountId, AmountOfOperationDTO amountOfOperationDTO, String hashedKey){
+    public void refund(Long accountId, ThirdPartyOperationDTO thirdPartyOperationDTO, String hashedKey){
         Optional<ThirdParty> thirdPartyOptional = thirdPartyRepository.findByHashedKey(hashedKey);
         if(!thirdPartyOptional.isPresent()){
             throw new MyCustomException("ThirdParty not found");
@@ -54,8 +58,19 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
         if(!accountOptional.isPresent()){
             throw new MyCustomException("Target account not found");
         }
+        if(!thirdPartyOperationDTO.getTargetAccountSecretKey().equals(accountOptional.get().getSecretKey())){
+            throw new MyCustomException("Target account SecretKey is not valid");
+        }
 
-        accountOptional.get().getBalance().increaseAmount(amountOfOperationDTO.amountOfOperation);
+        accountOptional.get().getBalance().increaseAmount(thirdPartyOperationDTO.getAmountOfOperation());
         accountRepository.save(accountOptional.get());
+    }
+    @Override
+    public void deleteThirdParty(Long thirdPartyId){
+        Optional<ThirdParty> thirdPartyOptional = thirdPartyRepository.findById(thirdPartyId);
+        if(!thirdPartyOptional.isPresent()){
+            throw new MyCustomException("ThirdParty not found");
+        }
+        thirdPartyRepository.delete(thirdPartyOptional.get());
     }
 }
