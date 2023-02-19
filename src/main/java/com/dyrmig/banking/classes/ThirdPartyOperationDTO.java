@@ -6,6 +6,9 @@ public class ThirdPartyOperationDTO {
     private BigDecimal amountOfOperation;
     private String targetAccountSecretKey;
 
+    public ThirdPartyOperationDTO() {
+    }
+
     public ThirdPartyOperationDTO(BigDecimal amountOfOperation, String targetAccountSecretKey) {
         this.amountOfOperation = amountOfOperation;
         this.targetAccountSecretKey = targetAccountSecretKey;

@@ -6,10 +6,10 @@ The system have 4 types of accounts: StudentChecking, Checking, Savings, and Cre
 The system have 3 types of Users: Admins, AccountHolders and ThirdParty.
 
 Admins can create new accounts. When creating a new account they can create Checking, Savings or CreditCard Accounts.
-## Import all the APIs in your Postman
+
+## Import all the API routes to Postman
 
 [Postman Import file](https://file.io/ta5oN2MZRFAz)
-
 
 ## API Reference
 #### Admin only routes
@@ -37,7 +37,7 @@ Create a new CreditCard account for an AccountHolder:
 ```http
   POST /accountholders/{accountHolderId}/creditcard
 ```
-Substract amount from the account with accountId (requires an amountOfOperationDTO object in the body):
+Subtract amount from the account with accountId (requires an amountOfOperationDTO object in the body):
 ```http
   PATCH /accounts/{accountId}/subtract
 ```

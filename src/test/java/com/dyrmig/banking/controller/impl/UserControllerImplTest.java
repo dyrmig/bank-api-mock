@@ -28,11 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class UserControllerImplTest {
 
-    //@Autowired
-  //  private WebApplicationContext webApplicationContext; //simula un server
     @Autowired
-    private MockMvc mockMvc; //simula peticiones HTTP
-    private final ObjectMapper objectMapper = new ObjectMapper(); //construir objetos json de las clases de java
+    private MockMvc mockMvc;
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     AdminRepository adminRepository;
 
@@ -61,12 +59,6 @@ class UserControllerImplTest {
                 .andReturn();
         List<Admin> adminList = adminRepository.findAll();
         assertEquals(1, adminList.size());
-
-
-
-
-
-
 
         // Login
         MvcResult mvcResult = mockMvc.perform(

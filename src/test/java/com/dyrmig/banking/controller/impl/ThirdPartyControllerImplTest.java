@@ -60,11 +60,10 @@ class ThirdPartyControllerImplTest {
     private UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    //@Autowired
-    //private WebApplicationContext webApplicationContext; //simula un server
+
     @Autowired
-    private MockMvc mockMvc; //simula peticiones HTTP
-    private final ObjectMapper objectMapper = new ObjectMapper(); //construir objetos json de las clases de java
+    private MockMvc mockMvc;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private ThirdParty thirdParty1;
     private ThirdParty thirdParty2;
@@ -126,9 +125,9 @@ class ThirdPartyControllerImplTest {
         httpHeaders.add("Authorization", "Bearer " + token);
 
          mvcResult = mockMvc
-                .perform(get("/thirdparty").headers(httpHeaders)) //hicimos un static import de MockMvcRequestBuilders
-                .andExpect(status().isOk()) //importamos: import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON)) //importamos: import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+                .perform(get("/thirdparty").headers(httpHeaders))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         assertTrue(mvcResult.getResponse().getContentAsString().contains("MasterCard"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Visa"));
@@ -152,7 +151,7 @@ class ThirdPartyControllerImplTest {
         httpHeaders.add("Authorization", "Bearer " + token);
 
         ThirdParty newThirdParty = new ThirdParty("American Express");
-        String body = objectMapper.writeValueAsString(newThirdParty); //convertimos el objeto java a un string json
+        String body = objectMapper.writeValueAsString(newThirdParty);
 
         mvcResult = mockMvc
                 .perform(
@@ -171,7 +170,7 @@ class ThirdPartyControllerImplTest {
     @Test
     void charge() throws Exception {
         ThirdPartyOperationDTO thirdPartyOperationDTO = new ThirdPartyOperationDTO(new BigDecimal("1000.00"), "chcktsd82h8e");
-        String body = objectMapper.writeValueAsString(thirdPartyOperationDTO); //convertimos el objeto java a un string json
+        String body = objectMapper.writeValueAsString(thirdPartyOperationDTO);
 
         MvcResult mvcResult = mockMvc
                 .perform(
@@ -180,7 +179,7 @@ class ThirdPartyControllerImplTest {
                                 .content(body)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn();
         Optional<Checking> checkingOptional = checkingRepository.findById(checking1.getId());
         assertTrue(checkingOptional.isPresent());
@@ -190,7 +189,7 @@ class ThirdPartyControllerImplTest {
     @Test
     void refund() throws Exception {
         ThirdPartyOperationDTO thirdPartyOperationDTO = new ThirdPartyOperationDTO(new BigDecimal("1000.00"), "chcktsd82h8e");
-        String body = objectMapper.writeValueAsString(thirdPartyOperationDTO); //convertimos el objeto java a un string json
+        String body = objectMapper.writeValueAsString(thirdPartyOperationDTO);
 
         MvcResult mvcResult = mockMvc
                 .perform(
@@ -199,7 +198,7 @@ class ThirdPartyControllerImplTest {
                                 .content(body)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andReturn();
         Optional<Checking> checkingOptional = checkingRepository.findById(checking1.getId());
         assertTrue(checkingOptional.isPresent());
