@@ -7,6 +7,7 @@ The system have 3 types of Users: Admins, AccountHolders and ThirdParty.
 
 Admins can create new accounts. When creating a new account they can create Checking, Savings or CreditCard Accounts.
 
+[![Diagrama-sin-t-tulo-drawio.png](https://i.postimg.cc/ZqQs5F3c/Diagrama-sin-t-tulo-drawio.png)](https://postimg.cc/bGQ96nmD)
 ## Import all the API routes to Postman
 
 [Postman Import file](https://file.io/ta5oN2MZRFAz)
