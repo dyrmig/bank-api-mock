@@ -10,7 +10,7 @@ Admins can create new accounts. When creating a new account they can create Chec
 [![Diagrama-sin-t-tulo-drawio.png](https://i.postimg.cc/ZqQs5F3c/Diagrama-sin-t-tulo-drawio.png)](https://postimg.cc/bGQ96nmD)
 ## Import all the API routes to Postman
 
-[Postman Import file](https://file.io/ta5oN2MZRFAz)
+[Postman Import file](https://github.com/dyrmig/bank-api-mock/blob/main/Banking.postman_collection.json)
 
 ## API Reference
 #### Admin only routes
